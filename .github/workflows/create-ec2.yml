@@ -1,0 +1,36 @@
+name: Create EC2
+
+on:
+  workflow_dispatch:
+    inputs:
+      environment:
+        description: "Environment"
+        required: true
+        type: string
+
+      region:
+        description: "AWS Region"
+        required: true
+        type: string
+
+      instance_type:
+        description: "EC2 Instance Type"
+        required: true
+        type: string
+
+      instance_name:
+        description: "EC2 Instance Name"
+        required: true
+        type: string
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Display parameters
+        run: |
+          echo "Environment: ${{ inputs.environment }}"
+          echo "Region: ${{ inputs.region }}"
+          echo "Instance Type: ${{ inputs.instance_type }}"
+          echo "Instance Name: ${{ inputs.instance_name }}"
