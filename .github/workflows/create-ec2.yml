@@ -39,6 +39,9 @@ jobs:
           echo "Instance Type: ${{ inputs.instance_type }}"
           echo "Instance Name: ${{ inputs.instance_name }}"
 
+      - name: Debug OIDC
+        uses: github/actions-oidc-debugger@main
+
       - name: Configure AWS credentials
         uses: aws-actions/configure-aws-credentials@v4
         with:
