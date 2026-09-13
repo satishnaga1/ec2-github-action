@@ -11,7 +11,7 @@ on:
       region:
         description: "AWS Region"
         required: true
-        default: "us-east-1"
+        default: "ap-south-1"
 
       instance_type:
         description: "EC2 Instance Type"
