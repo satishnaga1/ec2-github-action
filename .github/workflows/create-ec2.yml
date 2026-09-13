@@ -1,4 +1,3 @@
-```yaml
 name: Create EC2
 
 on:
