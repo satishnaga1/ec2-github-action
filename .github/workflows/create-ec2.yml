@@ -1,3 +1,4 @@
+```yaml
 name: Create EC2
 
 on:
@@ -6,41 +7,42 @@ on:
       environment:
         description: "Environment"
         required: true
-        type: string
+        default: "dev"
 
       region:
         description: "AWS Region"
         required: true
-        type: string
+        default: "us-east-1"
 
       instance_type:
         description: "EC2 Instance Type"
         required: true
-        type: string
+        default: "t2.micro"
 
       instance_name:
         description: "EC2 Instance Name"
         required: true
-        type: string
+        default: "gitops-ec2"
 
 permissions:
-  id-token: write
   contents: read
 
 jobs:
-  test-aws:
+  create-ec2:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Display parameters
-        run: |
-          echo "Environment: ${{ inputs.environment }}"
-          echo "Region: ${{ inputs.region }}"
-          echo "Instance Type: ${{ inputs.instance_type }}"
-          echo "Instance Name: ${{ inputs.instance_name }}"
-      - name: Configure AWS credentials
+      - name: AWS Login
         uses: aws-actions/configure-aws-credentials@v4
         with:
           aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           aws-region: ${{ inputs.region }}
+
+      - name: Create EC2
+        run: |
+          aws ec2 run-instances \
+            --image-id ami-08188a5a4dfdbd573 \
+            --instance-type ${{ inputs.instance_type }} \
+            --tag-specifications "ResourceType=instance,Tags=[{Key=Name,Value=${{ inputs.instance_name }}},{Key=Environment,Value=${{ inputs.environment }}}]"
+```
