@@ -44,4 +44,4 @@ jobs:
             --image-id ami-08188a5a4dfdbd573 \
             --instance-type ${{ inputs.instance_type }} \
             --tag-specifications "ResourceType=instance,Tags=[{Key=Name,Value=${{ inputs.instance_name }}},{Key=Environment,Value=${{ inputs.environment }}}]"
-```
+
